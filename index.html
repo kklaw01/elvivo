@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vídeo com Som Ativo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <video id="meuVideo" src="video.mp4" loop class="video"></video>
+  </div>
+
+  <script>
+    window.addEventListener("load", () => {
+      const video = document.getElementById("meuVideo");
+
+      // Força o vídeo a carregar e tentar reproduzir
+      video.autoplay = true;
+      video.muted = false;
+
+      const tentarTocar = async () => {
+        try {
+          await video.play();
+          console.log("🎬 Vídeo com som iniciado automaticamente!");
+        } catch (error) {
+          console.warn("🔇 Autoplay com som bloqueado, aguardando clique...");
+          // Só toca quando o usuário clicar em qualquer lugar
+          document.body.addEventListener("click", () => {
+            video.play();
+          }, { once: true });
+        }
+      };
+
+      tentarTocar();
+    });
+  </script>
+</body>
+</html>
+
